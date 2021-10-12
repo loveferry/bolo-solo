@@ -1,12 +1,11 @@
 FROM docker.io/library/maven:3.8-jdk-8-openj9@sha256:6a670ff83da03ed0a9ac43ceb582c1ce656684678022c81e89f05f5833d3e83a as MVN_BUILD
 
 WORKDIR /opt/bolo/
-ADD . /tmp
-RUN cd /tmp && mvn package -DskipTests -Pci && mv target/bolo/* /opt/bolo/ \
+ADD . /tmp/
+RUN cd /tmp/ && mvn clean package && mv target/bolo/* /opt/bolo/ \
     && cp -f /tmp/src/main/resources/docker/* /opt/bolo/WEB-INF/classes/
 
 FROM openjdk:8-alpine
-LABEL maintainer="Liang Ding<d@b3log.org>"
 
 WORKDIR /opt/bolo/
 COPY --from=MVN_BUILD /opt/bolo/ /opt/bolo/
