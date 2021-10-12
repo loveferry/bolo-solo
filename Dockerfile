@@ -2,7 +2,7 @@ FROM docker.io/library/maven:3.8-jdk-8-openj9@sha256:6a670ff83da03ed0a9ac43ceb58
 
 WORKDIR /opt/bolo/
 ADD . /tmp/
-RUN cd /tmp/ && mvn clean package && mv target/bolo/* /opt/bolo/ \
+RUN cd /tmp/ && mvn -DskipTests -Pci -q && mv target/bolo/* /opt/bolo/ \
     && cp -f /tmp/src/main/resources/docker/* /opt/bolo/WEB-INF/classes/
 
 FROM openjdk:8-alpine
