@@ -4,7 +4,7 @@ WORKDIR /opt/bolo/
 
 COPY . /tmp/
 
-RUN cd /tmp/ && mvn -DskipTests -Pci -q && mv target/bolo/* /opt/bolo/ && cp -f /tmp/src/main/resources/docker/* /opt/bolo/WEB-INF/classes/
+RUN cd /tmp/ && mvn -DskipTests -Pci -q
 
 FROM openjdk:8-alpine
 
@@ -16,6 +16,4 @@ RUN apk add --no-cache ca-certificates tzdata
 
 ENV TZ=Asia/Shanghai
 
-EXPOSE 8080
 
-ENTRYPOINT [ "java", "-cp", "WEB-INF/lib/*:WEB-INF/classes", "org.b3log.solo.Starter" ]
